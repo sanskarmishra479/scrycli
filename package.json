@@ -1,0 +1,32 @@
+{
+  "name": "@sanskarmishra479/scrycli",
+  "version": "0.0.1",
+  "description": "AI-powered CLI for detecting and fixing code errors.",
+  "main": "index.js",
+  "bin": {
+    "scrycli": "./dist/bin/index.js"
+  },
+ "scripts": {
+    "build": "tsc",
+    "dev": "tsc && node ./dist/bin/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "scrycli",
+    "cli",
+    "command-line",
+    "AI",
+    "Terminal",
+    "Cursor for Terminal"
+  ],
+  "author": "Sanskar",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "commander": "^14.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.1.0",
+    "typescript": "^5.9.2"
+  }
+}
