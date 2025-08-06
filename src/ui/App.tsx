@@ -8,9 +8,9 @@ const App = () => {
 
   return (
     <>
-    {/* <Welcome />
-    <Auth /> */}
-    <SelectModel />
+    <Welcome />
+    {/* <Auth /> */}
+    {/* <SelectModel /> */}
     </>
   );
 };
