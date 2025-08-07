@@ -9,7 +9,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const AUTH_URL = process.env.AUTH_URL || 'https://scrycli.com/auth';
+const AUTH_URL = process.env.AUTH_URL || '';
 
 const Auth = () => {
 	const [step, setStep] = useState<'prompt' | 'waiting' | 'done' | 'error'>('prompt');

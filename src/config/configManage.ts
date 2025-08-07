@@ -19,3 +19,9 @@ export const setConfig = (key: string, value: any) => {
     config[key] = value;
     fs.writeFileSync(configPath, JSON.stringify(config, null, 2));
 };
+
+export const deleteConfig = (key: string) => {
+    const config = getConfig();
+    delete config[key];
+    fs.writeFileSync(configPath, JSON.stringify(config, null, 2));
+};
