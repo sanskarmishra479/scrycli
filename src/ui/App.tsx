@@ -1,16 +1,22 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Welcome from './Welcome.js';
 import Auth from './Auth.js';
 import SelectModel from './SelectModel.js';
+import Header from './Header.js';
+import Footer from './Footer.js';
+import InputBox from './InputBox.js';
 
 const App = () => {
-  const [filePath, setFilePath] = useState<string | null>(null);
 
   return (
     <>
-    <Welcome />
+    {/* <InputBox /> */}
+    {/* <Header /> */}
+    {/* <Welcome />
+    <Footer /> */}
     {/* <Auth /> */}
-    {/* <SelectModel /> */}
+    <SelectModel />
+
     </>
   );
 };

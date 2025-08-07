@@ -32,14 +32,13 @@ const Auth = () => {
 			}
 		} else if (step === 'waiting' && inputMode && key.return) {         
 			try {
-				// Validate token is not empty
+				
 				if (!token.trim()) {
 					setError('Token cannot be empty');
 					setStep('error');
 					return;
 				}
 
-				// Check if JWT_SECRET is configured
 				const jwtSecret = process.env.JWT_SECRET;
 				if (!jwtSecret) {
 					setError('JWT_SECRET not configured in environment variables');
@@ -47,7 +46,6 @@ const Auth = () => {
 					return;
 				}
 
-				// Verify the token
 				const decoded = jwt.verify(token, jwtSecret) as { userId: string };
 
 				if (decoded && decoded.userId) {
@@ -64,7 +62,6 @@ const Auth = () => {
 				setStep('error');
 			}
 		} else if (step === 'error' && key.return) {
-			// Allow retry from error state
 			setStep('prompt');
 			setError('');
 			setToken('');
