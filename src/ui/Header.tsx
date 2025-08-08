@@ -1,9 +1,17 @@
 import { Box, Text } from "ink";
+import { useEffect } from "react";
 
-const Header = () => {
+const Header = ({onDone}:{onDone:() => void}) => {
+  useEffect(()=>{
+    setTimeout(()=>{
+      onDone();
+    },1500)
+  },[])
+  
+
   return (
     <Box flexDirection="column" width="100%">
-        <Box borderStyle="round" borderColor="white" paddingX={0} alignSelf="center">
+        <Box borderStyle="single" borderColor="white" paddingX={1} alignSelf="center">
             <Text color="gray">
             ✻ Welcome to the <Text bold color="white">SCRYCLI</Text>
             </Text>

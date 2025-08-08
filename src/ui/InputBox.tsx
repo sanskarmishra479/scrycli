@@ -7,7 +7,7 @@ import Cmd from "./Commands/Cmd.js";
 
 
 
-const InputBox = ()=>{
+const InputBox = ({onDone}: {onDone: () => void})=>{
     const cwd = process.cwd();
     const config = getConfig();
     const [suggestions, setSuggestions] = useState(false);
@@ -22,6 +22,7 @@ const InputBox = ()=>{
         }
     }
     const handleSubmit = (value: string) => {
+        onDone();
         console.log(value);
     }
     

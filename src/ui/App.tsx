@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Welcome from './Welcome.js';
 import Auth from './Auth.js';
 import SelectModel from './SelectModel.js';
@@ -11,20 +11,26 @@ import Exit from './Commands/Exit.js';
 import Report from './Commands/Report.js';
 import isAuthenticated from '../lib/auth.js';
 import { Box } from 'ink';
+import isModelSelected from '../lib/isModelSelected.js';
 
 const App = () => {
+  const [stepAuth, setStepAuth] = useState(0); 
+  const [step, setStep] = useState(0);
+  const goNextAuth = () => setStepAuth((prev) => prev + 1);
+  const goNext = () => setStepAuth((prev) => prev + 1);
 
   return (
     <>
-      {isAuthenticated() ? (
+      {isAuthenticated() && isModelSelected() ? (
         <Box flexDirection="column" width="100%">
               <Welcome />
               <Footer />
-              <InputBox />
+              {stepAuth === 0 && <InputBox onDone={goNext}/>}
+
         </Box>
       ):(
         <Box flexDirection="column" width="100%">
-          <Header />
+          <Header onDone={goNextAuth} />
           <Welcome />
           <Auth />
         </Box>

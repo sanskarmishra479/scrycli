@@ -91,7 +91,7 @@ const Auth = () => {
 			)}
 
 			{step === 'done' && (
-				<Box flexDirection="column" marginTop={1} marginBottom={1} borderStyle="single" borderColor="white" width="100%" paddingX={1}>
+				<Box marginTop={1} marginBottom={1} borderStyle="single" borderColor="gray" width="100%">
 					<Text color="cyan">✅ Token received and verified successfully!</Text>
 				</Box>
 			)}
