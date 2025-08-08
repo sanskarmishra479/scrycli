@@ -9,22 +9,26 @@ import Logout from './Commands/Logout.js';
 import Cmd from './Commands/Cmd.js';
 import Exit from './Commands/Exit.js';
 import Report from './Commands/Report.js';
+import isAuthenticated from '../lib/auth.js';
+import { Box } from 'ink';
 
 const App = () => {
 
   return (
     <>
-    {/* <InputBox /> */}
-    {/* <Header /> */}
-    {/* <Welcome />
-    <Footer /> */}
-    {/* <Auth /> */}
-    {/* <SelectModel /> */}
-    {/* <Logout /> */}
-    {/* <Exit /> */}
-    <Report />
-    {/* <Cmd /> */}
-
+      {isAuthenticated() ? (
+        <Box flexDirection="column" width="100%">
+              <Welcome />
+              <Footer />
+        </Box>
+      ):(
+        <Box flexDirection="column" width="100%">
+          <Header />
+          <Welcome />
+          <Footer />
+          <Auth />
+        </Box>
+      )}
     </>
   );
 };

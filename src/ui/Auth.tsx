@@ -7,7 +7,7 @@ import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 
 
-dotenv.config();
+dotenv.config({ quiet: true });
 
 const AUTH_URL = process.env.AUTH_URL || '';
 
@@ -72,27 +72,36 @@ const Auth = () => {
 	return (
 		<Box flexDirection="column">
 			{step === 'prompt' && (
-				<Text>🔐 Press [Enter] to Sign In / Sign Up in browser</Text>
+				<Box marginTop={1} marginBottom={1} borderStyle="single" borderColor="white" width="100%" paddingX={1}>
+					<Text color='gray'>🔐 Press <Text bold color="white">[Enter]</Text> to Signin to your account</Text>
+				</Box>
 			)}
 
 			{step === 'waiting' && (
 				<>
-					<Text>🌐 Browser opened at {AUTH_URL}</Text>
-					<Text>📥 Paste your token here and press [Enter]:</Text>
+					<Box flexDirection="column" marginTop={1} marginBottom={1} borderStyle="single" borderColor="white" width="100%" paddingX={1}>
+						<Text color="gray">🌐 Browser opened at {AUTH_URL}</Text>
+						<Text color="gray">📥 Paste your token here and press <Text bold color="white">[Enter]</Text>:</Text>
+					</Box>
 					<Box borderStyle="single" alignSelf="flex-start" width="100%" borderColor="green">
-						<TextInput value={token} onChange={setToken} placeholder='Add your token here..' />
+						<Box marginRight={1}><Text color="white">{`>`}</Text></Box>
+						<TextInput mask='*' value={token} onChange={setToken} placeholder='Add your token here..' />
 					</Box>
 				</>
 			)}
 
 			{step === 'done' && (
-				<Text color="cyan">✅ Token received and verified successfully!</Text>
+				<Box flexDirection="column" marginTop={1} marginBottom={1} borderStyle="single" borderColor="white" width="100%" paddingX={1}>
+					<Text color="cyan">✅ Token received and verified successfully!</Text>
+				</Box>
 			)}
 
 			{step === 'error' && (
 				<>
-					<Text color="red">❌ Error: {error}</Text>
-					<Text color="yellow">Press [Enter] to try again</Text>
+					<Box flexDirection="column" marginTop={1} marginBottom={1} borderStyle="single" borderColor="white" width="100%" paddingX={1}>
+						<Text color="red">❌ Error: {error}</Text>
+						<Text color="yellow">Press [Enter] to try again</Text>
+					</Box>
 				</>
 			)}
 		</Box>

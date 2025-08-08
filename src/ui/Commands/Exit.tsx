@@ -7,7 +7,7 @@ const Exit = () =>{
         exit();
     }, 1500);
     return(
-        <Box>
+        <Box >
             <Box marginRight={1}>
             <Spinner type="dots" />
             </Box>
