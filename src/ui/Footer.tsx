@@ -3,7 +3,7 @@ import { Box, Newline, Text } from "ink";
 const Footer = () => {
   return (
         <Box alignSelf="center" marginBottom={1}>
-          <Text color="white">/cmd <Text color="gray">Show all commands</Text></Text>
+          <Text color="gray">Enter<Text bold color="white"> / </Text>to see all commands</Text>
         </Box>
   );    
 };

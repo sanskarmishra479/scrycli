@@ -20,12 +20,12 @@ const App = () => {
         <Box flexDirection="column" width="100%">
               <Welcome />
               <Footer />
+              <InputBox />
         </Box>
       ):(
         <Box flexDirection="column" width="100%">
           <Header />
           <Welcome />
-          <Footer />
           <Auth />
         </Box>
       )}
