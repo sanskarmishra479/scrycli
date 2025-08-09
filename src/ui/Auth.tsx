@@ -11,7 +11,7 @@ dotenv.config({ quiet: true });
 
 const AUTH_URL = process.env.AUTH_URL || '';
 
-const Auth = () => {
+const Auth = ({ onAuthenticated }: { onAuthenticated?: () => void }) => {
 	const [step, setStep] = useState<'prompt' | 'waiting' | 'done' | 'error'>('prompt');
 	const [inputMode, setInputMode] = useState(false);
 	const [token, setToken] = useState('');
@@ -48,12 +48,16 @@ const Auth = () => {
 
 				const decoded = jwt.verify(token, jwtSecret) as { userId: string };
 
-				if (decoded && decoded.userId) {
-					setConfig('user', {token: token, userId: decoded.userId});
-					setStep('done');
-					setInputMode(false);
-					setError('');
-				} else {
+                if (decoded && decoded.userId) {
+                    setConfig('user', {token: token, userId: decoded.userId});
+                    setStep('done');
+                    setInputMode(false);
+                    setError('');
+                    // Show success for 1s, then advance
+                    setTimeout(() => {
+                        onAuthenticated && onAuthenticated();
+                    }, 1000);
+                } else {
 					throw new Error('Invalid token structure');
 				}
 			} catch (error) {
@@ -92,7 +96,7 @@ const Auth = () => {
 
 			{step === 'done' && (
 				<Box marginTop={1} marginBottom={1} borderStyle="single" borderColor="gray" width="100%">
-					<Text color="cyan">✅ Token received and verified successfully!</Text>
+					<Text color="cyan">✅ Logged in successfully!</Text>
 				</Box>
 			)}
 

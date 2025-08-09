@@ -19,20 +19,32 @@ const App = () => {
   const goNextAuth = () => setStepAuth((prev) => prev + 1);
   const goNext = () => setStepAuth((prev) => prev + 1);
 
+  const [authed, setAuthed] = useState<boolean>(isAuthenticated());
+  const [modelSelected, setModelSelected] = useState<boolean>(isModelSelected());
+
   return (
     <>
-      {isAuthenticated() && isModelSelected() ? (
+      {!authed && (
         <Box flexDirection="column" width="100%">
-              <Welcome />
-              <Footer />
-              {stepAuth === 0 && <InputBox onDone={goNext}/>}
-
-        </Box>
-      ):(
-        <Box flexDirection="column" width="100%">
-          <Header onDone={goNextAuth} />
+          <Header />
           <Welcome />
-          <Auth />
+          <Auth onAuthenticated={() => setAuthed(true)} />
+        </Box>
+      )}
+
+      {authed && !modelSelected && (
+        <Box flexDirection="column" width="100%">
+          <Header />
+          <Welcome />
+          <SelectModel onDone={() => setModelSelected(true)} />
+        </Box>
+      )}
+
+      {authed && modelSelected && (
+        <Box flexDirection="column" width="100%">
+          <Welcome />
+          <Footer />
+          <InputBox />
         </Box>
       )}
     </>

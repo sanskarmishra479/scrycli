@@ -1,13 +1,8 @@
 import { Box, Text } from "ink";
 import { useEffect } from "react";
 
-const Header = ({onDone}:{onDone:() => void}) => {
-  useEffect(()=>{
-    setTimeout(()=>{
-      onDone();
-    },1500)
-  },[])
-  
+const Header = () => {
+
 
   return (
     <Box flexDirection="column" width="100%">

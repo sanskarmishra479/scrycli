@@ -4,7 +4,11 @@ import TextInput from 'ink-text-input';
 import { useState } from 'react';
 import { setConfig } from '../config/configManage.js';
 
-const SelectModel = ({onDone}: {onDone: () => void}) => {
+interface selectModelType {
+    onDone?: () => void;
+}
+
+const SelectModel = (props:selectModelType) => {
     const [apiKey, setApiKey] = useState('');
     const [item, setItem] = useState({ label: '', value: '' });
 
@@ -15,7 +19,7 @@ const SelectModel = ({onDone}: {onDone: () => void}) => {
 
     const handleSubmit = () => {
         if (item.label && apiKey) {
-            onDone();
+            props.onDone && props.onDone();
             setConfig('model', { modelName: item.label, modelKey: apiKey });
         }
     };
@@ -42,9 +46,9 @@ const SelectModel = ({onDone}: {onDone: () => void}) => {
             <SelectInput items={items} onSelect={handleSelect} />
             { item.label && 
                 <Box borderStyle="single" borderColor="white" paddingX={1} alignSelf='flex-start' width='50%'>
-                    {item.label === 'OpenAI' && <TextInput mask='*' value={apiKey} onChange={setApiKey} placeholder=' Enter your OpenAI API key' onSubmit={handleSubmit} />}
-                    {item.label === 'Gemini' && <TextInput mask='*' value={apiKey} onChange={setApiKey} placeholder=' Enter your Gemini API key' onSubmit={handleSubmit} />}
-                    {item.label === 'DeepSeek' && <TextInput mask='*' value={apiKey} onChange={setApiKey} placeholder=' Enter your DeepSeek API key' onSubmit={handleSubmit} />}
+                    {item.label === 'OpenAI' && <TextInput  value={apiKey} onChange={setApiKey} placeholder=' Enter your OpenAI API key' onSubmit={handleSubmit} />}
+                    {item.label === 'Gemini' && <TextInput  value={apiKey} onChange={setApiKey} placeholder=' Enter your Gemini API key' onSubmit={handleSubmit} />}
+                    {item.label === 'DeepSeek' && <TextInput  value={apiKey} onChange={setApiKey} placeholder=' Enter your DeepSeek API key' onSubmit={handleSubmit} />}
                 </Box>
             }
         </Box>

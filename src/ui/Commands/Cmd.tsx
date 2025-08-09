@@ -11,7 +11,6 @@ const Cmd = () =>{
                 <Text color="gray"><Text bold color="white">/logout</Text> - Logout</Text>
                 <Text color="gray"><Text bold color="white">/Report</Text> - Report a bug</Text>
                 <Text color="gray"><Text bold color="white">/exit</Text> - Exit</Text>
-                <Text color="gray"><Text bold color="white">/cmd</Text> - Show commands</Text>
             </Box>
         </Box>
     )

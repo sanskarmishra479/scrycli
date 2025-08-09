@@ -23,6 +23,7 @@
   "license": "ISC",
   "type": "module",
   "dependencies": {
+    "@google/genai": "^1.13.0",
     "@types/jsonwebtoken": "^9.0.10",
     "commander": "^14.0.0",
     "dotenv": "^17.2.1",
@@ -32,17 +33,19 @@
     "ink-confirm-input": "^2.0.0",
     "ink-gradient": "^3.0.0",
     "ink-link": "^4.1.0",
+    "ink-markdown": "^1.0.4",
     "ink-select-input": "^6.2.0",
     "ink-spinner": "^5.0.0",
     "ink-text-input": "^6.0.0",
     "jsonwebtoken": "^9.0.2",
+    "mime": "^4.0.7",
     "open": "^10.2.0",
     "openai": "^5.12.0",
     "react": "^19.1.1"
   },
   "devDependencies": {
     "@types/ink-box": "^1.0.4",
-    "@types/node": "^24.1.0",
+    "@types/node": "^24.2.1",
     "@types/react": "^19.1.9",
     "typescript": "^5.9.2"
   }
