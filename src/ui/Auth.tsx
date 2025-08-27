@@ -89,7 +89,7 @@ const Auth = ({ onAuthenticated }: { onAuthenticated?: () => void }) => {
 					</Box>
 					<Box borderStyle="single" alignSelf="flex-start" width="100%" borderColor="green">
 						<Box marginRight={1}><Text color="white">{`>`}</Text></Box>
-						<TextInput mask='*' value={token} onChange={setToken} placeholder='Add your token here..' />
+						<TextInput value={token} onChange={setToken} placeholder='Add your token here..' />
 					</Box>
 				</>
 			)}
