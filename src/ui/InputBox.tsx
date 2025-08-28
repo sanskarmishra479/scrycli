@@ -20,7 +20,6 @@ const InputBox = () => {
   const [prompt, setPrompt] = useState("");
   const [value, setValue] = useState("");
 
-  // new: ai output state
   const [answer, setAnswer] = useState("");
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState("");

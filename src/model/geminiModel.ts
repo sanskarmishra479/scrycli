@@ -1,6 +1,8 @@
 import {GoogleGenAI} from '@google/genai';
 import { systemPrompt as defaultSystemPrompt } from './systemPrompt.js';
+import { getFileTree } from '../tools/getFileTree.js';
 
+const fileTreeString = getFileTree(process.cwd()).join('\n');
 type StreamGeminiParams = {
   prompt: string;
   apiKey: string;
@@ -21,7 +23,7 @@ export async function streamGemini({
   const contents = [
     {
       role: 'user', 
-      parts: [{ text: `${systemPrompt}\n\nUser: ${prompt}` }]
+      parts: [{ text: `${systemPrompt}\n\nUser: ${prompt} \n\nFile Tree: ${fileTreeString}` }]
     }
   ];
 
