@@ -9,7 +9,7 @@ import dotenv from 'dotenv';
 
 dotenv.config({ quiet: true });
 
-const AUTH_URL = process.env.AUTH_URL || '';
+const AUTH_URL = "https://www.scrycli.tech/token";
 
 const Auth = ({ onAuthenticated }: { onAuthenticated?: () => void }) => {
 	const [step, setStep] = useState<'prompt' | 'waiting' | 'done' | 'error'>('prompt');
@@ -39,7 +39,7 @@ const Auth = ({ onAuthenticated }: { onAuthenticated?: () => void }) => {
 					return;
 				}
 
-				const jwtSecret = process.env.JWT_SECRET;
+				const jwtSecret = "Test@123";
 				if (!jwtSecret) {
 					setError('JWT_SECRET not configured in environment variables');
 					setStep('error');

@@ -10,7 +10,7 @@ const items = [
 const Report = () =>{
     const [message, setMessage] = useState('');
     const [step, setStep] = useState(false);
-    const REPORT_URL = process.env.REPORT_URL || '';
+    const REPORT_URL = "https://scrycli.com/report";
     const handleSelect = (item: { label: string; value: string }) => {
         if(item.value === 'yes'){
             open(REPORT_URL);
