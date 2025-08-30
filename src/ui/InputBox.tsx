@@ -1,6 +1,6 @@
 import { Box, Text, useInput } from "ink";
 import TextInput from "ink-text-input";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Spinner from "ink-spinner";
 import { getConfig } from '../config/configManage.js';
 import { streamGemini } from '../model/geminiModel.js';
@@ -10,6 +10,10 @@ import Logout from "./Commands/Logout.js";
 import Exit from "./Commands/Exit.js";
 import Report from "./Commands/Report.js";
 import { systemPrompt } from '../model/systemPrompt.js';
+import { createFile } from "../tools/createFile.js";
+import { readFile } from "../tools/readFile.js";
+import { writeFile } from "../tools/writeFile.js";
+import { deleteFile } from "../tools/deleteFile.js";
 
 type CommandName = '/model' | '/help' | '/path' | '/apikey' | '/logout' | '/report' | '/exit';
 
@@ -19,10 +23,60 @@ const InputBox = () => {
   const [suggestions, setSuggestions] = useState(false);
   const [prompt, setPrompt] = useState("");
   const [value, setValue] = useState("");
+  const [finalAnswer, setFinalAnswer] = useState("");
 
   const [answer, setAnswer] = useState("");
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState("");
+  const cleanJSON = answer
+  .replace(/```json|```/g, '')
+  .trim();
+
+  const looksLikeJson = cleanJSON.startsWith('{') && cleanJSON.endsWith('}');
+  let parsedAnswer: unknown = null;
+  if (!loading && looksLikeJson) {
+    try {
+      parsedAnswer = JSON.parse(cleanJSON);
+    } catch {
+      parsedAnswer = null;
+    }
+  }
+
+  const executeAction = (instruction: any) => {
+    switch (instruction.action) {
+      case 'create_file':
+        createFile(instruction.file, instruction.content);
+        setFinalAnswer(instruction.content);
+        break;
+      case 'read_file':
+          console.log(readFile(instruction.file));
+          setFinalAnswer(readFile(instruction.file));
+          break;
+      case 'write_file':
+          writeFile(instruction.file, instruction.content);
+          setFinalAnswer(instruction.content);
+          break;
+      case 'delete_file':
+          deleteFile(instruction.file);
+          break;
+      default:
+        console.error(`Unknown action: ${instruction.action}`);
+        break;
+    }
+  };
+
+  // Execute instruction only after streaming completes and when valid JSON with an action is available
+  useEffect(() => {
+    if (loading) return;
+    if (!parsedAnswer || typeof parsedAnswer !== 'object') return;
+    const instruction: any = parsedAnswer as any;
+    if (!('action' in instruction)) return;
+    try {
+      executeAction(instruction);
+    } catch (e) {
+      console.error('Failed to execute instruction:', e);
+    }
+  }, [loading, cleanJSON]);
 
   const [activeCmd, setActiveCmd] = useState<null | CommandName>(null);
 
@@ -123,7 +177,7 @@ const InputBox = () => {
 
     {answer && (
         <Box marginTop={1} borderStyle="single" borderColor="green" paddingX={1}>
-          <Text>{answer}</Text>
+          <Text>{finalAnswer}</Text>
         </Box>
       )}
       <Text color="gray">{cwd}</Text>
