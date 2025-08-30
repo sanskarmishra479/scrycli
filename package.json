@@ -1,6 +1,6 @@
 {
   "name": "@sanskarmishra479/scrycli",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "AI-powered CLI for detecting and fixing code errors.",
   "main": "dist/bin/index.js",
   "bin": {
@@ -50,7 +50,13 @@
     "@types/react": "^19.1.9",
     "typescript": "^5.9.2"
   },
-  "publishConfig": { "access": "public" },
-  "files": ["dist", "README.md", "LICENSE"],
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "prepublishOnly": "npm run build"
 }
