@@ -12,13 +12,13 @@ An AI-powered CLI tool for detecting and fixing code errors with a beautiful ter
 ## 📦 Installation
 
 ```bash
-npm install -g @sanskarmishra479/scrycli
+npm install -g scrycli
 ```
 
 Or install locally:
 
 ```bash
-npm install @sanskarmishra479/scrycli
+npm install scrycli
 ```
 
 ## 🎯 Usage

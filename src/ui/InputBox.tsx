@@ -65,7 +65,7 @@ const InputBox = () => {
     }
   };
 
-  // Execute instruction only after streaming completes and when valid JSON with an action is available
+
   useEffect(() => {
     if (loading) return;
     if (!parsedAnswer || typeof parsedAnswer !== 'object') return;

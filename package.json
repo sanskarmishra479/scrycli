@@ -1,5 +1,5 @@
 {
-  "name": "@sanskarmishra479/scrycli",
+  "name": "scrycli",
   "version": "0.0.4",
   "description": "AI-powered CLI for detecting and fixing code errors.",
   "main": "dist/bin/index.js",
