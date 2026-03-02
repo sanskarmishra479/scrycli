@@ -1,5 +1,4 @@
 import { Box, Text } from "ink";
-import { useEffect } from "react";
 
 const Header = () => {
 

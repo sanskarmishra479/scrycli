@@ -1,0 +1,1 @@
+export type CommandName = '/model' | '/help' | '/path' | '/apikey' | '/logout' | '/report' | '/exit';

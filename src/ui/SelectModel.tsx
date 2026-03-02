@@ -1,58 +1,77 @@
-import { Box, Text } from 'ink';
-import SelectInput from 'ink-select-input';
-import TextInput from 'ink-text-input';
-import { useState } from 'react';
-import { setConfig } from '../config/configManage.js';
+import React, { useEffect, useState } from "react";
+import { Box, Text } from "ink";
+import SelectInput from "ink-select-input";
+import { setConfig } from "../config/configManage.js";
 
 interface selectModelType {
     onDone?: () => void;
 }
 
-const SelectModel = (props:selectModelType) => {
-    const [apiKey, setApiKey] = useState('');
-    const [item, setItem] = useState({ label: '', value: '' });
 
-    const handleSelect = (item: { label: string; value: string }) => {
-        setItem(item);
-        setApiKey('');
-    };
+const providers = [
+    { label: "OpenAI", value: "openai" },
+    { label: "StepFun ", value: "stepfun" },
+    { label: "Qwen", value: "qwen" },
+    { label: "ArceeAI", value: "arceeai" },
+    { label: "Mistral", value: "mistral" },
+    { label: "Zai", value: "zai" },
+];
 
-    const handleSubmit = () => {
-        if (item.label && apiKey) {
+const modelsMap: Record<string, any[]> = {
+    openai: [
+        { label: "gpt-oss-120b (Recommended)", value: "openai/gpt-oss-120b:free" },
+        { label: "gpt-oss-20b", value: "openai/gpt-oss-20b:free" },
+    ],
+    arceeai: [
+        { label: "Trinity Large (Recommended)", value: "arcee-ai/trinity-large-preview:free" },
+        { label: "Trinity Mini", value: "arcee-ai/trinity-mini:free" },
+    ],
+    mistral: [
+        { label: "Mistral Small 3.1 24B", value: "mistralai/mistral-small-3.1-24b-instruct:free" },
+    ],
+    qwen: [
+        { label: "Qwen3 Coder 480B A35B", value: "qwen/qwen3-coder:free" },
+        { label: "Qwen3 Next 80B A3B Instruct (Recommended)", value: "qwen/qwen3-next-80b-a3b-instruct:free" },
+    ],
+    stepfun: [
+        { label: "Step 3.5 Flash", value: "stepfun/step-3.5-flash:free" },
+    ],
+    zai: [
+        { label: "GLM 4.5 Air", value: "z-ai/glm-4.5-air:free" },
+    ]
+};
+
+const SelectModel = (props: selectModelType) => {
+    const [selectedProvider, setSelectedProvider] = useState<string | null>(null);
+    const [selectedModel, setSelectedModel] = useState<string | null>(null);
+
+    useEffect(() => {
+        if (selectedModel) {
             props.onDone && props.onDone();
-            setConfig('model', { modelName: item.label, modelKey: apiKey });
         }
-    };
-    
-    const items = [
-        {
-            label: 'OpenAI',
-            value: 'OpenAI'
-        },
-        {
-            label: 'Gemini',
-            value: 'Gemini'
-        },
-        {
-            label: 'DeepSeek',
-            value: 'DeepSeek'
-        }
-    ];
+    }, [selectedModel]);
+
     return (
-        <Box flexDirection="column" gap={1}>
-            <Box borderStyle="single" borderColor="white" alignSelf="flex-start" paddingX={1} width='100%' >
-                    <Text color="gray">👇 Select a model and Press <Text bold color="white">[Enter]</Text></Text>
-            </Box>
-            <SelectInput items={items} onSelect={handleSelect} />
-            { item.label && 
-                <Box borderStyle="single" borderColor="white" paddingX={1} alignSelf='flex-start' width='50%'>
-                    {item.label === 'OpenAI' && <TextInput  value={apiKey} onChange={setApiKey} placeholder=' Enter your OpenAI API key' onSubmit={handleSubmit} />}
-                    {item.label === 'Gemini' && <TextInput  value={apiKey} onChange={setApiKey} placeholder=' Enter your Gemini API key' onSubmit={handleSubmit} />}
-                    {item.label === 'DeepSeek' && <TextInput  value={apiKey} onChange={setApiKey} placeholder=' Enter your DeepSeek API key' onSubmit={handleSubmit} />}
-                </Box>
-            }
+        <Box>
+            {!selectedProvider && (
+                <SelectInput
+                    items={providers}
+                    onSelect={(item) => setSelectedProvider(item.value)}
+                />
+            )}
+
+            {selectedProvider && !selectedModel && (
+                <SelectInput
+                    items={modelsMap[selectedProvider] || []}
+                    onSelect={(item) => {
+                        setSelectedModel(item.value as string);
+                        setConfig('model', { modelProvider: selectedProvider, modelName: item.value });
+                    }}
+                />
+            )}
+
         </Box>
     );
-};
+}
 
 export default SelectModel;
