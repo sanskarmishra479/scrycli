@@ -4,7 +4,7 @@ import { getConfig } from '../config/configManage.js';
 
 const fileTreeString = getFileTree(process.cwd()).join('\n');
 const openRouterClient = new OpenRouter({
-  apiKey: '',
+  apiKey: `${getConfig().openRouter.apiKey}`,
 });
 
 type llmCallParams = {

@@ -8,7 +8,7 @@ interface PromptInputProps {
     placeholder?: string;
 }
 
-const PromptInput = ({ onSubmit, placeholder }: PromptInputProps) => {
+const Input = ({ onSubmit, placeholder }: PromptInputProps) => {
     const [prompt, setPrompt] = useState("");
 
     return (
@@ -26,4 +26,4 @@ const PromptInput = ({ onSubmit, placeholder }: PromptInputProps) => {
     )
 
 }
-export default PromptInput;
+export default Input;

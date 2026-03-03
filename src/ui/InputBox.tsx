@@ -4,7 +4,7 @@ import { useChat } from "../hooks/useChat.js";
 import { Text, useInput } from "ink";
 import { Box } from "ink";
 import AnswerDisplay from "./AnswerDisplay.js";
-import PromptInput from "./PromptInput.js";
+import Input from "./Input.js";
 import CommandRouter from "./CommandRouter.js";
 import type { CommandName } from "../types/cmdNameType.js";
 import { getConfig } from "../config/configManage.js";
@@ -33,7 +33,7 @@ const InputBox = () => {
     <Box flexDirection="column">
       <AnswerDisplay loading={loading} error={error} answer={toolResult || finalAnswer} />
       <Text color="gray">{cwd}</Text>
-      <PromptInput 
+      <Input 
         onSubmit={handleSubmit} 
         placeholder="Ask anything about your codebase..." />
         <Box alignSelf="flex-end">
