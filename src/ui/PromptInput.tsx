@@ -13,7 +13,7 @@ const PromptInput = ({ onSubmit, placeholder }: PromptInputProps) => {
 
     return (
         <>
-            <Box borderStyle="single" borderColor="white" width="100%" paddingX={0} >
+            <Box borderStyle="single" borderRight={false} borderLeft={false} borderColor="white" width="100%" paddingX={0} >
                 <Box marginRight={1}><Text color="white">{`>`}</Text></Box>
                 <TextInput
                     value={prompt}

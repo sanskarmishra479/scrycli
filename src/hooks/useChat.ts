@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { getConfig } from "../config/configManage.js";
 import { llmCall } from "../model/openRouter.js";
 import { systemPrompt } from "../model/systemPrompt.js";
 
@@ -14,19 +13,17 @@ export function useChat() {
       setError("");
       setLoading(true);
       try {
-        const config = getConfig();
-        const text = await llmCall({
+        const response = await llmCall({
           prompt,
           systemPrompt: systemPrompt as string,
         });
-        setAnswer(text);
-        setFinalAnswer(text);
+        setAnswer(response);
+        setFinalAnswer(response);
       } catch (e: any) {
         setError(e?.message || "Something went wrong.");
       } finally {
         setLoading(false);
       }
     };
-  
     return { answer, finalAnswer, loading, error, send, setFinalAnswer };
   }
