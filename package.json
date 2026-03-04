@@ -1,6 +1,6 @@
 {
   "name": "scrycli",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "AI-powered CLI for detecting and fixing code errors.",
   "main": "dist/bin/index.js",
   "bin": {
