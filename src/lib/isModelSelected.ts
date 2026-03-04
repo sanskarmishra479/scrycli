@@ -9,7 +9,6 @@ const isModelSelected = (): boolean => {
         if (!config?.model.modelName) return false;
         return config.model.modelName !== '' && config.model.modelProvider !== '';
     }catch(error){
-        console.error(error);
         return false;
     }
 };

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useInput, Text, Box } from 'ink';
 import open from 'open';
-import TextInput from 'ink-text-input';
+import PasteAwareInput from './PasteAwareInput.js';
 import { setConfig } from '../config/configManage.js';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
@@ -13,63 +13,58 @@ const AUTH_URL = "https://www.scrycli.tech/token";
 
 const Auth = ({ onAuthenticated }: { onAuthenticated?: () => void }) => {
 	const [step, setStep] = useState<'prompt' | 'waiting' | 'done' | 'error'>('prompt');
-	const [inputMode, setInputMode] = useState(false);
 	const [token, setToken] = useState('');
 	const [error, setError] = useState('');
 
+	const handleTokenSubmit = (val: string) => {
+		try {
+			if (!val.trim()) {
+				setError('Token cannot be empty');
+				setStep('error');
+				return;
+			}
 
-	useInput((input, key) => {
+			const jwtSecret = "Test@123";
+			if (!jwtSecret) {
+				setError('JWT_SECRET not configured in environment variables');
+				setStep('error');
+				return;
+			}
+
+			const decoded = jwt.verify(val, jwtSecret) as { userId: string };
+
+			if (decoded && decoded.userId) {
+				setConfig('user', {token: val, userId: decoded.userId});
+				setStep('done');
+				setError('');
+				setTimeout(() => {
+					onAuthenticated && onAuthenticated();
+				}, 1000);
+			} else {
+				throw new Error('Invalid token structure');
+			}
+		} catch (error) {
+			console.error('Token verification failed:', error);
+			setError('Invalid token. Please check your token and try again.');
+			setStep('error');
+		}
+	};
+
+	useInput((_input, key) => {
 		if (step === 'prompt' && key.return) {
 			try {
 				open(AUTH_URL); 
 				setStep('waiting');
-				setInputMode(true);
 				setError('');
 			} catch (error) {
 				console.error('Failed to open browser:', error);
 				setError('Failed to open browser. Please visit the URL manually.');
 				setStep('error');
 			}
-		} else if (step === 'waiting' && inputMode && key.return) {         
-			try {
-				
-				if (!token.trim()) {
-					setError('Token cannot be empty');
-					setStep('error');
-					return;
-				}
-
-				const jwtSecret = "Test@123";
-				if (!jwtSecret) {
-					setError('JWT_SECRET not configured in environment variables');
-					setStep('error');
-					return;
-				}
-
-				const decoded = jwt.verify(token, jwtSecret) as { userId: string };
-
-                if (decoded && decoded.userId) {
-                    setConfig('user', {token: token, userId: decoded.userId});
-                    setStep('done');
-                    setInputMode(false);
-                    setError('');
-                    // Show success for 1s, then advance
-                    setTimeout(() => {
-                        onAuthenticated && onAuthenticated();
-                    }, 1000);
-                } else {
-					throw new Error('Invalid token structure');
-				}
-			} catch (error) {
-				console.error('Token verification failed:', error);
-				setError('Invalid token. Please check your token and try again.');
-				setStep('error');
-			}
 		} else if (step === 'error' && key.return) {
 			setStep('prompt');
 			setError('');
 			setToken('');
-			setInputMode(false);
 		}
 	});
 
@@ -89,7 +84,7 @@ const Auth = ({ onAuthenticated }: { onAuthenticated?: () => void }) => {
 					</Box>
 					<Box borderStyle="single" alignSelf="flex-start" width="100%" borderColor="green">
 						<Box marginRight={1}><Text color="white">{`>`}</Text></Box>
-						<TextInput value={token} onChange={setToken} placeholder='Add your token here..' />
+						<PasteAwareInput value={token} onChange={setToken} onSubmit={handleTokenSubmit} placeholder='Add your token here..' />
 					</Box>
 				</>
 			)}

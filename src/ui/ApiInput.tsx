@@ -1,19 +1,22 @@
-import { Box } from "ink"
-import Input from "./Input.js"
+import { useState } from "react"
+import { Box, Text } from "ink"
+import PasteAwareInput from "./PasteAwareInput.js"
 import { getConfig, setConfig } from "../config/configManage.js"
 
-
-
 const ApiInput = ({ onDone }: { onDone?: () => void }) => {
-    const handleSubmit = (value: string) => {
-        setConfig('openRouter', {apiKey: value})
-        console.log(getConfig());
+    const [value, setValue] = useState("");
+
+    const handleSubmit = (val: string) => {
+        setConfig('openRouter', {apiKey: val})
         onDone && onDone();
     }
 
     return (
-        <Box>
-            <Input
+        <Box borderStyle="single" borderRight={false} borderLeft={false} borderColor="white" width="100%" paddingX={0}>
+            <Box marginRight={1}><Text color="white">{`>`}</Text></Box>
+            <PasteAwareInput
+                value={value}
+                onChange={setValue}
                 onSubmit={handleSubmit}
                 placeholder="Enter your OpenRouter API key"
             />
