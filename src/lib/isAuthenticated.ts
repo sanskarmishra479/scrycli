@@ -2,7 +2,7 @@ import { getConfig } from "../config/configManage.js";
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 
-dotenv.config({ quiet: true });
+const JWT_SECRET = "Test@123";
 
 
 const isAuthenticated = (): boolean => {
