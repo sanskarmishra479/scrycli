@@ -6,6 +6,7 @@ import Report from "./Commands/Report.js";
 import SelectModel from "./SelectModel.js";
 import type { JSX } from "react";
 import type { CommandName } from "../types/cmdNameType.js";
+import ApiInput from "./ApiInput.js";
 
 
 
@@ -14,7 +15,7 @@ const CommandRouter = ({ command, onBack }: { command: CommandName; onBack: () =
       "/model": <SelectModel />,
       "/help": <Cmd />,
       "/path": <Cmd />,
-      "/apikey": <SelectModel />,
+      "/apikey": <ApiInput />,
       "/logout": <Logout />,
       "/report": <Report />,
       "/exit": <Exit />,

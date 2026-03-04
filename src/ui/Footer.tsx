@@ -1,4 +1,4 @@
-import { Box, Newline, Text } from "ink";
+import { Box, Text } from "ink";
 
 const Footer = () => {
   return (

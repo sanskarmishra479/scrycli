@@ -3,9 +3,7 @@ import { getFileTree } from '../tools/getFileTree.js';
 import { getConfig } from '../config/configManage.js';
 
 const fileTreeString = getFileTree(process.cwd()).join('\n');
-const openRouterClient = new OpenRouter({
-  apiKey: `${getConfig().openRouter.apiKey}`,
-});
+
 
 type llmCallParams = {
   prompt: string;
@@ -16,6 +14,9 @@ export async function llmCall({
   prompt,
   systemPrompt,
 }: llmCallParams): Promise<string> {
+  const openRouterClient = new OpenRouter({
+    apiKey: `${getConfig()?.openRouter?.apiKey}`,
+  });
   const result = openRouterClient.callModel({
     model: `${getConfig().model.modelName}`,
     instructions: `${systemPrompt}`,

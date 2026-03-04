@@ -5,9 +5,11 @@ import SelectModel from './SelectModel.js';
 import Header from './Header.js';
 import Footer from './Footer.js';
 import InputBox from './InputBox.js';
-import isAuthenticated from '../lib/auth.js';
+import isAuthenticated from '../lib/isAuthenticated.js';
 import { Box } from 'ink';
 import isModelSelected from '../lib/isModelSelected.js';
+import isApiAvailable from '../lib/isApiAvailable.js';
+import ApiInput from './ApiInput.js';
 
 const App = () => {
   const [stepAuth, setStepAuth] = useState(0); 
@@ -17,6 +19,7 @@ const App = () => {
 
   const [authed, setAuthed] = useState<boolean>(isAuthenticated());
   const [modelSelected, setModelSelected] = useState<boolean>(isModelSelected());
+  const [apiAvailable, setApiAvailable] = useState<boolean>(isApiAvailable());
 
   return (
     <>
@@ -27,8 +30,14 @@ const App = () => {
           <Auth onAuthenticated={() => setAuthed(true)} />
         </Box>
       )}
-
-      {authed && !modelSelected && (
+      {authed && !apiAvailable && (
+        <Box flexDirection="column" width="100%">
+          <Header />
+          <Welcome />
+          <ApiInput onDone={() => setApiAvailable(true)} />
+        </Box>
+      )}
+      {authed && apiAvailable && !modelSelected && (
         <Box flexDirection="column" width="100%">
           <Header />
           <Welcome />
@@ -36,7 +45,7 @@ const App = () => {
         </Box>
       )}
 
-      {authed && modelSelected && (
+      {authed && apiAvailable && modelSelected && (
         <Box flexDirection="column" width="100%">
           <Welcome />
           <Footer />

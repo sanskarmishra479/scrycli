@@ -1,12 +1,14 @@
 import { Box } from "ink"
 import Input from "./Input.js"
-import { setConfig } from "../config/configManage.js"
+import { getConfig, setConfig } from "../config/configManage.js"
 
 
 
-const ApiInput = () => {
+const ApiInput = ({ onDone }: { onDone?: () => void }) => {
     const handleSubmit = (value: string) => {
         setConfig('openRouter', {apiKey: value})
+        console.log(getConfig());
+        onDone && onDone();
     }
 
     return (

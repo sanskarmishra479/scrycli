@@ -20,6 +20,7 @@ const Logout = () =>{
             setMessage("✅ You’ve been logged out successfully.");
             deleteConfig('user');
             deleteConfig('model');
+            deleteConfig('openRouter');
             setTimeout(() => {
                 exit();
             }, 1000);

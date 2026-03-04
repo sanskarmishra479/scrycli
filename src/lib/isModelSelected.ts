@@ -6,9 +6,8 @@ dotenv.config({ quiet: true });
 const isModelSelected = (): boolean => {
 	try{
         const config = getConfig();
-        if (!config?.model?.modelName) return false;
-        if (!config?.model?.modelKey) return false;
-        return config.model.modelName !== '' && config.model.modelKey !== '';
+        if (!config?.model.modelName) return false;
+        return config.model.modelName !== '' && config.model.modelProvider !== '';
     }catch(error){
         console.error(error);
         return false;
