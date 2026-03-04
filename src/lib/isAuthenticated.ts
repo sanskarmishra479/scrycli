@@ -11,7 +11,7 @@ const isAuthenticated = (): boolean => {
 
 		if (!config?.user?.token) return false;
 
-		const decoded = jwt.verify(config.user.token, process.env.JWT_SECRET) as any;
+		const decoded = jwt.verify(config.user.token, JWT_SECRET) as any;
 
 		return decoded && typeof decoded === 'object' && 'userId' in decoded;
 	} catch (error) {
