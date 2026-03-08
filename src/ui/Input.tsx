@@ -1,7 +1,17 @@
 import { Box, Text } from "ink";
 import TextInput from "ink-text-input";
 import { useState } from "react";
-import Cmd from "./Cmd.js";
+
+const commands = [
+    { cmd: "/session", desc: "Manage conversations" },
+    { cmd: "/help", desc: "Show help" },
+    { cmd: "/model", desc: "Select a model" },
+    { cmd: "/apikey", desc: "Set API key" },
+    { cmd: "/path", desc: "Change directory" },
+    { cmd: "/logout", desc: "Logout" },
+    { cmd: "/report", desc: "Report a bug" },
+    { cmd: "/exit", desc: "Exit" },
+];
 
 interface PromptInputProps {
     onSubmit: (value: string) => void;
@@ -10,6 +20,11 @@ interface PromptInputProps {
 
 const Input = ({ onSubmit, placeholder }: PromptInputProps) => {
     const [prompt, setPrompt] = useState("");
+
+    const showSuggestions = prompt.startsWith("/");
+    const filtered = showSuggestions
+        ? commands.filter(c => c.cmd.startsWith(prompt.toLowerCase()))
+        : [];
 
     return (
         <>
@@ -21,7 +36,15 @@ const Input = ({ onSubmit, placeholder }: PromptInputProps) => {
                     onSubmit={(val) => { onSubmit(val); setPrompt(""); }}
                     placeholder={placeholder || ""} />
             </Box>
-            {prompt.startsWith("/") && <Cmd />}
+            {showSuggestions && filtered.length > 0 && (
+                <Box flexDirection="column" borderStyle="single" paddingX={1}>
+                    {filtered.map(({ cmd, desc }) => (
+                        <Text key={cmd} color="gray">
+                            <Text bold color="white">{cmd}</Text> - {desc}
+                        </Text>
+                    ))}
+                </Box>
+            )}
         </>
     )
 

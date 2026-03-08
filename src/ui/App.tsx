@@ -50,7 +50,6 @@ const App = () => {
       )}
       {authed && apiAvailable && modelSelected && (
         <Box flexDirection="column" width="100%">
-          <Welcome />
           <Footer />
           <InputBox
             key={activeSessionId}

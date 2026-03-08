@@ -23,16 +23,6 @@ const InputBox = ({ sessionId, onSessionSelect }: InputBoxProps) => {
     if (key.escape) setActiveCmd(null);
   });
 
-  if (activeCmd) {
-    return (
-      <CommandRouter
-        command={activeCmd}
-        onBack={() => setActiveCmd(null)}
-        onSessionSelect={onSessionSelect}
-      />
-    );
-  }
-
   const handleSubmit = (val: string) => {
     if (val.startsWith("/")) { setActiveCmd(val as CommandName); return; }
     send(val);
@@ -40,32 +30,41 @@ const InputBox = ({ sessionId, onSessionSelect }: InputBoxProps) => {
 
   return (
     <Box flexDirection="column">
-      {/* Chat history */}
-      {session.messages.map((msg, i) => (
-        <Box key={i} marginTop={1} flexDirection="column">
-          <Text bold color={msg.role === "user" ? "cyan" : "green"}>
-            {msg.role === "user" ? "> You" : "> SCRYCLI"}
-          </Text>
-          <Box paddingLeft={2}>
-            <Text>{msg.content}</Text>
+      {activeCmd ? (
+        <CommandRouter
+          command={activeCmd}
+          onBack={() => setActiveCmd(null)}
+          onSessionSelect={onSessionSelect}
+        />
+      ) : (
+        <>
+          {session.messages.map((msg, i) => (
+            <Box key={i} marginTop={1} flexDirection="column">
+              <Text bold color={msg.role === "user" ? "cyan" : "green"}>
+                {msg.role === "user" ? "> You" : "> SCRYCLI"}
+              </Text>
+              <Box paddingLeft={2}>
+                <Text>{msg.content}</Text>
+              </Box>
+            </Box>
+          ))}
+
+          {loading && (
+            <Box marginTop={1}>
+              <Box marginRight={1}><Spinner type="dots" /></Box>
+              <Text color="gray">Working...</Text>
+            </Box>
+          )}
+
+          {error && <Box marginTop={1}><Text color="red">Error: {error}</Text></Box>}
+
+          <Text color="gray">{cwd}</Text>
+          <Input onSubmit={handleSubmit} placeholder="Ask anything about your codebase..." />
+          <Box alignSelf="flex-end">
+            <Text color="yellow">{`Model: ${config?.model?.modelName ?? "Not Selected"}`}</Text>
           </Box>
-        </Box>
-      ))}
-
-      {loading && (
-        <Box marginTop={1}>
-          <Box marginRight={1}><Spinner type="dots" /></Box>
-          <Text color="gray">Working...</Text>
-        </Box>
+        </>
       )}
-
-      {error && <Box marginTop={1}><Text color="red">Error: {error}</Text></Box>}
-
-      <Text color="gray">{cwd}</Text>
-      <Input onSubmit={handleSubmit} placeholder="Ask anything about your codebase..." />
-      <Box alignSelf="flex-end">
-        <Text color="yellow">{`Model: ${config?.model?.modelName ?? "Not Selected"}`}</Text>
-      </Box>
     </Box>
   );
 };
