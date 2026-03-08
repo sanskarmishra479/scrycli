@@ -1,4 +1,4 @@
-import { Text, Box } from 'ink';
+import { Box } from 'ink';
 import BigText from 'ink-big-text';
 
 const Welcome = () => {

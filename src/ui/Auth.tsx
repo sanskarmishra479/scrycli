@@ -72,15 +72,15 @@ const Auth = ({ onAuthenticated }: { onAuthenticated?: () => void }) => {
 		<Box flexDirection="column">
 			{step === 'prompt' && (
 				<Box marginTop={1} marginBottom={1} borderStyle="single" borderColor="white" width="100%" paddingX={1}>
-					<Text color='gray'>🔐 Press <Text bold color="white">[Enter]</Text> to Signin to your account</Text>
+					<Text color='gray'>Press <Text bold color="white">[Enter]</Text> to Signin to your account</Text>
 				</Box>
 			)}
 
 			{step === 'waiting' && (
 				<>
 					<Box flexDirection="column" marginTop={1} marginBottom={1} borderStyle="single" borderColor="white" width="100%" paddingX={1}>
-						<Text color="gray">🌐 Browser opened at {AUTH_URL}</Text>
-						<Text color="gray">📥 Paste your token here and press <Text bold color="white">[Enter]</Text>:</Text>
+						<Text color="gray">Browser opened at {AUTH_URL}</Text>
+						<Text color="gray">Paste your token here and press <Text bold color="white">[Enter]</Text>:</Text>
 					</Box>
 					<Box borderStyle="single" alignSelf="flex-start" width="100%" borderColor="green">
 						<Box marginRight={1}><Text color="white">{`>`}</Text></Box>
@@ -91,14 +91,14 @@ const Auth = ({ onAuthenticated }: { onAuthenticated?: () => void }) => {
 
 			{step === 'done' && (
 				<Box marginTop={1} marginBottom={1} borderStyle="single" borderColor="gray" width="100%">
-					<Text color="cyan">✅ Logged in successfully!</Text>
+					<Text color="cyan">Logged in successfully!</Text>
 				</Box>
 			)}
 
 			{step === 'error' && (
 				<>
 					<Box flexDirection="column" marginTop={1} marginBottom={1} borderStyle="single" borderColor="white" width="100%" paddingX={1}>
-						<Text color="red">❌ Error: {error}</Text>
+						<Text color="red">Error: {error}</Text>
 						<Text color="yellow">Press [Enter] to try again</Text>
 					</Box>
 				</>

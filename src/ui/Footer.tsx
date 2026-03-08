@@ -2,7 +2,7 @@ import { Box, Text } from "ink";
 
 const Footer = () => {
   return (
-        <Box alignSelf="center" marginBottom={1}>
+        <Box alignSelf="center" marginBottom={1} marginTop={2}>
           <Text color="gray">Enter<Text bold color="white"> / </Text>to see all commands</Text>
         </Box>
   );    
