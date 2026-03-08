@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { llmCall } from "../model/openRouter.js";
-import { systemPrompt } from "../model/systemPrompt.js";
+import { llmCall } from "../llm/openRouter.js";
+import { systemPrompt } from "../llm/systemPrompt.js";
 
 export function useChat() {
     const [answer, setAnswer] = useState("");

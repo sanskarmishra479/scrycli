@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useInput, Text, Box } from 'ink';
 import open from 'open';
 import PasteAwareInput from './PasteAwareInput.js';
-import { setConfig } from '../config/configManage.js';
+import { setConfig } from '../core/configManage.js';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 

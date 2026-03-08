@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { Box, Text } from "ink"
 import PasteAwareInput from "./PasteAwareInput.js"
-import { getConfig, setConfig } from "../config/configManage.js"
+import { getConfig, setConfig } from "../core/configManage.js"
 
 const ApiInput = ({ onDone }: { onDone?: () => void }) => {
     const [value, setValue] = useState("");

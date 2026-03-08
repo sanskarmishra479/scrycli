@@ -7,7 +7,7 @@ import AnswerDisplay from "./AnswerDisplay.js";
 import Input from "./Input.js";
 import CommandRouter from "./CommandRouter.js";
 import type { CommandName } from "../types/cmdNameType.js";
-import { getConfig } from "../config/configManage.js";
+import { getConfig } from "../core/configManage.js";
 
 const InputBox = () => {
   const cwd = process.cwd();

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Box, Text } from "ink";
 import SelectInput from "ink-select-input";
-import { setConfig } from "../config/configManage.js";
+import { setConfig } from "../core/configManage.js";
 
 interface selectModelType {
     onDone?: () => void;

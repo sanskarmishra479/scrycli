@@ -1,6 +1,6 @@
 import { OpenRouter } from '@openrouter/sdk';
 import { getFileTree } from '../tools/getFileTree.js';
-import { getConfig } from '../config/configManage.js';
+import { getConfig } from '../core/configManage.js';
 
 const fileTreeString = getFileTree(process.cwd()).join('\n');
 

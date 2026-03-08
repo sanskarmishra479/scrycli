@@ -2,7 +2,7 @@ import { Box, Text } from "ink";
 import SelectInput from 'ink-select-input';
 import { useState } from "react";
 import {useApp} from 'ink';
-import { deleteConfig, getConfig } from "../../config/configManage.js";
+import { deleteConfig, getConfig } from "../../core/configManage.js";
 
 
 const items = [
