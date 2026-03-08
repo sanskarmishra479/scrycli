@@ -1,26 +1,23 @@
-import { OpenRouter } from '@openrouter/sdk';
+import { OpenRouter, stepCountIs } from '@openrouter/sdk';
 import { getFileTree } from '../tools/getFileTree.js';
 import { getConfig } from '../core/configManage.js';
+import { allTools } from "./tools.js";
 
 const fileTreeString = getFileTree(process.cwd()).join('\n');
 
 
-type llmCallParams = {
-  prompt: string;
-  systemPrompt: string;
-};
-
-export async function llmCall({
-  prompt,
-  systemPrompt,
-}: llmCallParams): Promise<string> {
-  const openRouterClient = new OpenRouter({
-    apiKey: `${getConfig()?.openRouter?.apiKey}`,
+export async function agentCall(input: string, systemPromptText: string): Promise<string> {
+  const config = getConfig();
+  const client = new OpenRouter({
+    apiKey: config?.openRouter?.apiKey,
   });
-  const result = openRouterClient.callModel({
-    model: `${getConfig().model.modelName}`,
-    instructions: `${systemPrompt}`,
-    input: `${prompt} \n\nFile Tree: ${fileTreeString}`,
+
+  const result = client.callModel({
+    model: config.model.modelName,
+    instructions: systemPromptText,
+    input: input,
+    tools: allTools,
+    stopWhen: stepCountIs(15),
   });
   const text = await result.getText();
   return text;
