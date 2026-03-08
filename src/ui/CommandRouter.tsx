@@ -1,16 +1,21 @@
 import { Box, Text } from "ink";
-import Cmd from "./Commands/Cmd.js";
+import Cmd from "./Cmd.js";
 import Exit from "./Commands/Exit.js";
 import Logout from "./Commands/Logout.js";
 import Report from "./Commands/Report.js";
 import SelectModel from "./SelectModel.js";
+import Session from "./Commands/Session.js";
 import type { JSX } from "react";
 import type { CommandName } from "../types/cmdNameType.js";
 import ApiInput from "./ApiInput.js";
 
+interface CommandRouterProps {
+  command: CommandName;
+  onBack: () => void;
+  onSessionSelect?: (sessionId: string) => void;
+}
 
-
-const CommandRouter = ({ command, onBack }: { command: CommandName; onBack: () => void }) => {
+const CommandRouter = ({ command, onBack, onSessionSelect }: CommandRouterProps) => {
     const routes: Record<CommandName, JSX.Element> = {
       "/model": <SelectModel />,
       "/help": <Cmd />,
@@ -19,8 +24,12 @@ const CommandRouter = ({ command, onBack }: { command: CommandName; onBack: () =
       "/logout": <Logout />,
       "/report": <Report />,
       "/exit": <Exit />,
+      "/session": <Session onSelect={(id) => {
+        onSessionSelect?.(id);
+        onBack();
+      }} />,
     };
-  
+
     return (
       <Box flexDirection="column">
         <Box marginBottom={1}>

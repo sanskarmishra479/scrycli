@@ -10,16 +10,20 @@ import { Box } from 'ink';
 import isModelSelected from '../lib/isModelSelected.js';
 import isApiAvailable from '../lib/isApiAvailable.js';
 import ApiInput from './ApiInput.js';
+import { createSession, listSessions } from '../core/sessionManager.js';
+
+function getOrCreateSessionId(): string {
+  const cwd = process.cwd();
+  const existing = listSessions(cwd);
+  if (existing.length > 0) return existing[0]?.id ?? ""; // most recent
+  return createSession(cwd).id;
+}
 
 const App = () => {
-  const [stepAuth, setStepAuth] = useState(0); 
-  const [step, setStep] = useState(0);
-  const goNextAuth = () => setStepAuth((prev) => prev + 1);
-  const goNext = () => setStepAuth((prev) => prev + 1);
-
   const [authed, setAuthed] = useState<boolean>(isAuthenticated());
   const [modelSelected, setModelSelected] = useState<boolean>(isModelSelected());
   const [apiAvailable, setApiAvailable] = useState<boolean>(isApiAvailable());
+  const [activeSessionId, setActiveSessionId] = useState<string>(() => getOrCreateSessionId());
 
   return (
     <>
@@ -44,12 +48,15 @@ const App = () => {
           <SelectModel onDone={() => setModelSelected(true)} />
         </Box>
       )}
-
       {authed && apiAvailable && modelSelected && (
         <Box flexDirection="column" width="100%">
           <Welcome />
           <Footer />
-          <InputBox />
+          <InputBox
+            key={activeSessionId}
+            sessionId={activeSessionId}
+            onSessionSelect={setActiveSessionId}
+          />
         </Box>
       )}
     </>

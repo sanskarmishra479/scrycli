@@ -1,27 +1,36 @@
 import { useState } from "react";
-import { useToolExecutor } from "../hooks/useToolExecutor.js";
 import { useChat } from "../hooks/useChat.js";
 import { Text, useInput } from "ink";
 import { Box } from "ink";
-import AnswerDisplay from "./AnswerDisplay.js";
+import Spinner from "ink-spinner";
 import Input from "./Input.js";
 import CommandRouter from "./CommandRouter.js";
 import type { CommandName } from "../types/cmdNameType.js";
 import { getConfig } from "../core/configManage.js";
 
-const InputBox = () => {
+interface InputBoxProps {
+  sessionId: string;
+  onSessionSelect: (id: string) => void;
+}
+
+const InputBox = ({ sessionId, onSessionSelect }: InputBoxProps) => {
   const cwd = process.cwd();
   const config = getConfig();
   const [activeCmd, setActiveCmd] = useState<CommandName | null>(null);
-  const { answer, finalAnswer, loading, error, send } = useChat();
-  const toolResult = useToolExecutor(answer, loading);
+  const { session, loading, error, send } = useChat(sessionId);
 
   useInput((_input, key) => {
     if (key.escape) setActiveCmd(null);
   });
 
   if (activeCmd) {
-    return <CommandRouter command={activeCmd} onBack={() => setActiveCmd(null)} />;
+    return (
+      <CommandRouter
+        command={activeCmd}
+        onBack={() => setActiveCmd(null)}
+        onSessionSelect={onSessionSelect}
+      />
+    );
   }
 
   const handleSubmit = (val: string) => {
@@ -31,13 +40,31 @@ const InputBox = () => {
 
   return (
     <Box flexDirection="column">
-      <AnswerDisplay loading={loading} error={error} answer={toolResult || finalAnswer} />
+      {/* Chat history */}
+      {session.messages.map((msg, i) => (
+        <Box key={i} marginTop={1} flexDirection="column">
+          <Text bold color={msg.role === "user" ? "cyan" : "green"}>
+            {msg.role === "user" ? "> You" : "> SCRYCLI"}
+          </Text>
+          <Box paddingLeft={2}>
+            <Text>{msg.content}</Text>
+          </Box>
+        </Box>
+      ))}
+
+      {loading && (
+        <Box marginTop={1}>
+          <Box marginRight={1}><Spinner type="dots" /></Box>
+          <Text color="gray">Working...</Text>
+        </Box>
+      )}
+
+      {error && <Box marginTop={1}><Text color="red">Error: {error}</Text></Box>}
+
       <Text color="gray">{cwd}</Text>
-      <Input 
-        onSubmit={handleSubmit} 
-        placeholder="Ask anything about your codebase..." />
-        <Box alignSelf="flex-end">
-        <Text color='yellow'>{`Model: ${config?.model?.modelName ?? 'Not Selected'}`}</Text>
+      <Input onSubmit={handleSubmit} placeholder="Ask anything about your codebase..." />
+      <Box alignSelf="flex-end">
+        <Text color="yellow">{`Model: ${config?.model?.modelName ?? "Not Selected"}`}</Text>
       </Box>
     </Box>
   );

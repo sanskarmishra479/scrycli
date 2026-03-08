@@ -1,7 +1,7 @@
 import { Box, Text } from "ink";
 import TextInput from "ink-text-input";
 import { useState } from "react";
-import Cmd from "./Commands/Cmd.js";
+import Cmd from "./Cmd.js";
 
 interface PromptInputProps {
     onSubmit: (value: string) => void;
