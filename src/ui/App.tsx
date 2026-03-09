@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Welcome from './Welcome.js';
 import Auth from './Auth.js';
 import SelectModel from './SelectModel.js';
@@ -24,6 +24,15 @@ const App = () => {
   const [modelSelected, setModelSelected] = useState<boolean>(isModelSelected());
   const [apiAvailable, setApiAvailable] = useState<boolean>(isApiAvailable());
   const [activeSessionId, setActiveSessionId] = useState<string>(() => getOrCreateSessionId());
+  const isFirstRender = useRef(true);
+
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+    process.stdout.write('\x1B[2J\x1B[H');
+  }, [activeSessionId]);
 
   return (
     <>
