@@ -31,9 +31,14 @@ const Session = ({ onSelect }: SessionProps) => {
     <Box flexDirection="column">
       <Text bold color="cyan">Sessions for this project:</Text>
       {sessions.length === 0 && (
-        <Text color="gray" dimColor>No previous sessions found.</Text>
+        <Text color="gray"  dimColor>No previous sessions found.</Text>
       )}
-      <Box marginTop={1}>
+      <Box marginTop={1}                         borderStyle="bold"
+                        borderColor="#BFD0E0"
+                        borderTop={false}
+                        borderBottom={false}
+                        borderRight={false}
+                        padding={1}>
         <SelectInput items={items} onSelect={handleSelect} />
       </Box>
     </Box>

@@ -19,7 +19,6 @@ const CommandRouter = ({ command, onBack, onSessionSelect }: CommandRouterProps)
     const routes: Record<CommandName, JSX.Element> = {
       "/model": <SelectModel />,
       "/help": <Cmd />,
-      "/path": <Cmd />,
       "/apikey": <ApiInput />,
       "/logout": <Logout />,
       "/report": <Report />,
@@ -32,8 +31,15 @@ const CommandRouter = ({ command, onBack, onSessionSelect }: CommandRouterProps)
 
     return (
       <Box flexDirection="column">
-        <Box marginBottom={1}>
-          <Text color="yellow">Press [Esc] to go back</Text>
+        <Box backgroundColor="#141414"
+            borderStyle="bold"
+            borderColor="#BFD0E0"
+            borderTop={false}
+            borderBottom={false}
+            borderRight={false}
+            marginBottom={1}
+            padding={1}>
+          <Text color="#F3DFA2">Press [Esc] to go back</Text>
         </Box>
         {routes[command]}
       </Box>

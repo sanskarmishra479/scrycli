@@ -26,8 +26,6 @@ const PasteAwareInput = ({ value, onChange, onSubmit, placeholder }: PasteAwareI
 	useEffect(() => {
 		setRawMode(true);
 
-		// Bracketed paste mode: terminal wraps pasted text with
-		// \x1b[200~ ... \x1b[201~ so we can detect and buffer it.
 		process.stdout.write('\x1b[?2004h');
 
 		const onData = (data: Buffer) => {

@@ -9,7 +9,7 @@ import type { CommandName } from "../types/cmdNameType.js";
 import { getConfig } from "../core/configManage.js";
 import type { Message } from "../types/messageType.js";
 
-interface InputBoxProps {
+interface ChatViewProps {
   sessionId: string;
   onSessionSelect: (id: string) => void;
 }
@@ -20,7 +20,7 @@ const ChatMessage = ({ msg, id }: { msg: Message; id: string }) => {
     <Box
       backgroundColor="#141414"
       borderStyle="bold"
-      borderColor={isUser ? "#484848" : "#5c9cf5"}
+      borderColor={isUser ? "#5DFDCB" : "#5c9cf5"}
       borderTop={false}
       borderBottom={false}
       borderRight={false}
@@ -40,7 +40,7 @@ const ChatMessage = ({ msg, id }: { msg: Message; id: string }) => {
   );
 };
 
-const InputBox = ({ sessionId, onSessionSelect }: InputBoxProps) => {
+const ChatView = ({ sessionId, onSessionSelect }: ChatViewProps) => {
   const cwd = process.cwd();
   const config = getConfig();
   const [activeCmd, setActiveCmd] = useState<CommandName | null>(null);
@@ -69,7 +69,8 @@ const InputBox = ({ sessionId, onSessionSelect }: InputBoxProps) => {
     ...msg,
     _key: `${sessionId}-${i}`,
   }));
-
+  console.log(getConfig())
+  
   return (
     <>
       <Static items={staticMessages}>
@@ -84,7 +85,16 @@ const InputBox = ({ sessionId, onSessionSelect }: InputBoxProps) => {
           </Box>
         )}
 
-        {error && <Box marginTop={1}><Text color="red">Error: {error}</Text></Box>}
+        {error && <Box marginTop={1}
+        marginBottom={1}
+        backgroundColor="#141414"
+        borderStyle="bold"
+        borderColor="#BFD0E0"
+        borderTop={false}
+        borderBottom={false}
+        borderRight={false}
+        padding={1}
+        ><Text color="red">Error: {error}</Text></Box>}
 
         <Box marginTop={1} flexDirection="column">
           <Text color="gray">{cwd}</Text>
@@ -98,4 +108,4 @@ const InputBox = ({ sessionId, onSessionSelect }: InputBoxProps) => {
   );
 };
 
-export default InputBox;
+export default ChatView;

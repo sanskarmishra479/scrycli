@@ -34,7 +34,7 @@ const Auth = ({ onAuthenticated }: { onAuthenticated?: () => void }) => {
 			const decoded = jwt.verify(val, jwtSecret) as { userId: string };
 
 			if (decoded && decoded.userId) {
-				setConfig('user', {token: val, userId: decoded.userId});
+				setConfig('user', { token: val, userId: decoded.userId });
 				setStep('done');
 				setError('');
 				setTimeout(() => {
@@ -53,7 +53,7 @@ const Auth = ({ onAuthenticated }: { onAuthenticated?: () => void }) => {
 	useInput((_input, key) => {
 		if (step === 'prompt' && key.return) {
 			try {
-				open(AUTH_URL); 
+				open(AUTH_URL);
 				setStep('waiting');
 				setError('');
 			} catch (error) {

@@ -52,7 +52,14 @@ const SelectModel = (props: selectModelType) => {
     }, [selectedModel]);
 
     return (
-        <Box>
+        <Box flexDirection="column"
+            backgroundColor="#141414"
+            borderStyle="bold"
+            borderColor="#BFD0E0"
+            borderTop={false}
+            borderBottom={false}
+            borderRight={false}
+            padding={1}>
             {!selectedProvider && (
                 <SelectInput
                     items={providers}

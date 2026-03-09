@@ -4,7 +4,7 @@ import Auth from './Auth.js';
 import SelectModel from './SelectModel.js';
 import Header from './Header.js';
 import Footer from './Footer.js';
-import InputBox from './InputBox.js';
+import ChatView from './ChatView.js';
 import isAuthenticated from '../lib/isAuthenticated.js';
 import { Box } from 'ink';
 import isModelSelected from '../lib/isModelSelected.js';
@@ -51,7 +51,7 @@ const App = () => {
       {authed && apiAvailable && modelSelected && (
         <Box flexDirection="column" width="100%">
           <Footer />
-          <InputBox
+          <ChatView
             key={activeSessionId}
             sessionId={activeSessionId}
             onSessionSelect={setActiveSessionId}

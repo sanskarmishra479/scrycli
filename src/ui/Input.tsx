@@ -7,7 +7,6 @@ const commands = [
     { cmd: "/help", desc: "Show help" },
     { cmd: "/model", desc: "Select a model" },
     { cmd: "/apikey", desc: "Set API key" },
-    { cmd: "/path", desc: "Change directory" },
     { cmd: "/logout", desc: "Logout" },
     { cmd: "/report", desc: "Report a bug" },
     { cmd: "/exit", desc: "Exit" },
@@ -37,7 +36,13 @@ const Input = ({ onSubmit, placeholder }: PromptInputProps) => {
                     placeholder={placeholder || ""} />
             </Box>
             {showSuggestions && filtered.length > 0 && (
-                <Box flexDirection="column" borderStyle="single" paddingX={1}>
+                <Box flexDirection="column" backgroundColor="#141414"
+                    borderStyle="bold"
+                    borderColor="#BFD0E0"
+                    borderTop={false}
+                    borderBottom={false}
+                    borderRight={false}
+                    padding={1}>
                     {filtered.map(({ cmd, desc }) => (
                         <Text key={cmd} color="gray">
                             <Text bold color="white">{cmd}</Text> - {desc}
