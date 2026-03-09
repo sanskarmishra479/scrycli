@@ -69,8 +69,7 @@ const ChatView = ({ sessionId, onSessionSelect }: ChatViewProps) => {
     ...msg,
     _key: `${sessionId}-${i}`,
   }));
-  console.log(getConfig())
-  
+
   return (
     <>
       <Static items={staticMessages}>

@@ -1,9 +1,11 @@
+import path from "path";
 import { tool } from "@openrouter/sdk";
 import { z } from "zod";
 import { readFile } from "../tools/readFile.js";
 import { writeFile } from "../tools/writeFile.js";
 import { createFile } from "../tools/createFile.js";
 import { deleteFile } from "../tools/deleteFile.js";
+import { getFileTree } from "../tools/getFileTree.js";
 
 export const readFileTool = tool({
     name: "read_file",
@@ -51,4 +53,17 @@ export const deleteFileTool = tool({
         return `Deleted ${params.file}`;
     },
 });
-export const allTools = [readFileTool, createFileTool, writeFileTool, deleteFileTool] as const;
+export const listFilesTool = tool({
+    name: "list_files",
+    description: "List the file tree of the user's project directory. Returns the directory structure with files and folders. Use this to understand the project layout before making changes.",
+    inputSchema: z.object({
+        dir: z.string().optional().describe("Relative directory path to list. Defaults to project root if omitted."),
+    }),
+    execute: async (params) => {
+        const targetDir = params.dir
+            ? path.resolve(process.cwd(), params.dir)
+            : process.cwd();
+        return getFileTree(targetDir).join("\n");
+    },
+});
+export const allTools = [readFileTool, createFileTool, writeFileTool, deleteFileTool, listFilesTool] as const;

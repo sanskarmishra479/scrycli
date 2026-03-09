@@ -1,10 +1,7 @@
 import { OpenRouter, stepCountIs } from '@openrouter/sdk';
-import { getFileTree } from '../tools/getFileTree.js';
 import { getConfig } from '../core/configManage.js';
 import { allTools } from "./tools.js";
 import type { Message } from '../types/messageType.js';
-
-const fileTreeString = getFileTree(process.cwd()).join('\n');
 
 
 export async function agentCall(messages: Message[], systemPromptText: string): Promise<string> {
