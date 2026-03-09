@@ -60,6 +60,9 @@ const SelectModel = (props: selectModelType) => {
             borderBottom={false}
             borderRight={false}
             padding={1}>
+            <Box flexDirection="column" marginBottom={1} marginLeft={2}>
+                <Text color="cyan">Select a model</Text>
+            </Box>
             {!selectedProvider && (
                 <SelectInput
                     items={providers}
