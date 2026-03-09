@@ -27,6 +27,7 @@ const ChatMessage = ({ msg, id }: { msg: Message; id: string }) => {
       key={id}
       marginTop={1}
       padding={1}
+      width="100%"
       flexDirection="column"
     >
       <Text bold color={isUser ? "cyan" : "green"}>
