@@ -2,13 +2,16 @@
   "name": "scrycli",
   "version": "0.1.0",
   "description": "AI-powered CLI for detecting and fixing code errors.",
+  "packageManager": "bun@1.3.11",
   "main": "dist/bin/index.js",
   "bin": {
     "scrycli": "./dist/bin/index.js"
   },
   "scripts": {
     "build": "tsc",
+    "check:tui": "tsc --noEmit -p src-tui/tsconfig.json",
     "dev": "tsc && node ./dist/bin/index.js",
+    "dev:tui": "bun ./src-tui/bin/index.tsx",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -21,9 +24,14 @@
   ],
   "author": "Sanskar",
   "license": "ISC",
+  "engines": {
+    "bun": ">=1.3.0"
+  },
   "type": "module",
   "dependencies": {
     "@openrouter/sdk": "^0.9.11",
+    "@opentui/core": "^0.1.95",
+    "@opentui/react": "^0.1.95",
     "@types/jsonwebtoken": "^9.0.10",
     "dotenv": "^17.2.1",
     "ink": "^6.1.0",

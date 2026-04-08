@@ -1,0 +1,22 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "rootDir": "..",
+    "outDir": "../dist-tui",
+    "jsxImportSource": "@opentui/react",
+    "declaration": false,
+    "declarationMap": false,
+    "noEmit": true
+  },
+  "include": [
+    "./**/*.ts",
+    "./**/*.tsx",
+    "../src/core/**/*.ts",
+    "../src/hooks/**/*.ts",
+    "../src/llm/**/*.ts",
+    "../src/types/**/*.ts",
+    "../src/tools/**/*.ts"
+  ]
+}
